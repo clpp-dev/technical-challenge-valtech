@@ -1,11 +1,13 @@
 import type { ClientsConfig, ServiceContext, RecorderState } from '@vtex/api'
-import { method, Service } from '@vtex/api'
+import { LRUCache, method, Service } from '@vtex/api'
 
 import { Clients } from './clients'
-import { configMiddleware } from './middleware/config'
-import { cookiesFortuneMiddleware } from './middleware/products'
+import { cookiesFortuneMiddleware } from './middleware/cookiesFortune'
 
 const TIMEOUT_MS = 800
+const memoryCache = new LRUCache<string, any>({ max: 5000 })
+metrics.trackCache('status', memoryCache)
+
 
 // This is the configuration for clients available in `ctx.clients`.
 const clients: ClientsConfig<Clients> = {
@@ -14,6 +16,9 @@ const clients: ClientsConfig<Clients> = {
     default: {
       retries: 2,
       timeout: TIMEOUT_MS,
+    },
+    status: {
+      memoryCache,
     },
   },
 }
@@ -28,9 +33,6 @@ declare global {
 export default new Service({
   clients,
   routes: {
-    config: method({
-      GET: [configMiddleware],
-    }),
     cookiesfortune: method({
       GET: [cookiesFortuneMiddleware],
     }),

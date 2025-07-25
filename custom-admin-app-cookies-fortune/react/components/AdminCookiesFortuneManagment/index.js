@@ -6,12 +6,9 @@ import {
     Table,
     Alert,
     ModalDialog,
-    Input,
     IconDelete,
     IconEdit,
     ButtonWithIcon,
-    IconCheck,
-    IconClose,
     Button,
     Textarea
 } from 'vtex.styleguide'
@@ -54,7 +51,9 @@ const AdminCookiesFortuneManagment = () => {
                 type: "success",
                 text: "Se ha eliminado la frase correctamente"
             })
-            refetch()
+            setTimeout(() => {
+              refetch()
+            }, 1000)
         },
         onError: () => {
             setNotification({
@@ -67,13 +66,16 @@ const AdminCookiesFortuneManagment = () => {
 
     const [createDocument] = useMutation(CREATE_DOCUMENT, {
         onCompleted: (data) => {
-            console.log('Create completed:', data)
             setNotification({
                 active: true,
                 type: "success",
                 text: "Se ha creado la frase correctamente"
             })
-            refetch()
+
+            setTimeout(() => {
+              refetch()
+            }, 500)
+
             handleModalToggle()
         },
         onError: (error) => {
@@ -88,22 +90,25 @@ const AdminCookiesFortuneManagment = () => {
 
     const [editDocument] = useMutation(UPDATE_DOCUMENT, {
         onCompleted: (data) => {
-            console.log('Update completed:', data)
             setNotification({
                 active: true,
                 type: "success",
                 text: "Se ha editado la frase correctamente"
             })
-            refetch()
+
+            setTimeout(() => {
+              refetch()
+            }, 1000)
+
             handleModalToggle()
         },
         onError: (error) => {
-            console.error('Update error:', error)
             setNotification({
                 active: true,
                 type: "error",
                 text: `No se pudo editar la frase: ${error.message}`
             })
+            handleModalToggle()
         },
     })
 
@@ -131,17 +136,17 @@ const AdminCookiesFortuneManagment = () => {
         if (editMode) {
             editDocument({
                 variables: {
-                    acronym: "CF",
-                    document: {
-                        fields: [
-                            {
-                                key: "CookieFortune",
-                                value: newFortune.CookieFortune
-                            }
-                        ],
-                        id: newFortune.id
-                    }
+                acronym: "CF",
+                documentId: newFortune.id,
+                document: {
+                    fields: [
+                        {
+                            key: "CookieFortune",
+                            value: newFortune.CookieFortune
+                        }
+                    ]
                 }
+            }
             })
         } else {
             createDocument({
@@ -166,14 +171,15 @@ const AdminCookiesFortuneManagment = () => {
 
         setNewFortune({
             CookieFortune: fortune,
-            id: id
+            id: item.documentId || id  // Use documentId first, then fallback to id field
         })
         setEditMode(true)
         setModalOpen(true)
     }
 
     const handleDelete = (item) => {
-        const id = item.fields.find(field => field.key === 'id')?.value
+        const id = item.documentId || item.fields.find(field => field.key === 'id')?.value
+
         if (id) {
             deleteDocument({
                 variables: {
@@ -201,7 +207,6 @@ const AdminCookiesFortuneManagment = () => {
     if (error) return <Alert type="error">Error cargando las frases de la fortuna</Alert>
 
     const tableData = data?.documents?.map(item => {
-      console.log("🚀 ~ FortuneList ~ item:", item)
 
         const fortune = item.fields.find(field => field.key === 'CookieFortune')?.value || ""
         const id = item.fields.find(field => field.key === 'id')?.value || ""
@@ -229,18 +234,17 @@ const AdminCookiesFortuneManagment = () => {
     const tableSchema = {
         properties: {
             phrase: {
-                title: 'Frase de la Fortuna',
-                width: 200
+                title: <FormattedMessage id="cookiesfortune.input.phrase" />,
             },
             actions: {
-                title: 'Acciones',
-                width: 120
+                title: <FormattedMessage id="cookiesfortune.input.actions" />,
+                width: 100
             }
         }
     }
 
     return (
-        <div className="pa6">
+        <div className="pa6" style={{ width: '100%', maxWidth: '100%' }}>
             {ntf.active && (
                 <div className="mb5">
                     <Alert type={ntf.type}>{ntf.text}</Alert>
@@ -256,12 +260,14 @@ const AdminCookiesFortuneManagment = () => {
                 </Button>
             </div>
 
-            <Table
-                fullWidth
-                schema={tableSchema}
-                items={tableData}
-                loading={loading}
-            />
+            <div style={{ width: '100%' }}>
+                <Table
+                    fullWidth
+                    schema={tableSchema}
+                    items={tableData}
+                    loading={loading}
+                />
+            </div>
 
             <ModalDialog
                 centered
@@ -278,9 +284,12 @@ const AdminCookiesFortuneManagment = () => {
             >
                 <div className="pa4">
                     <h3 className="mb4">
-                        <FormattedMessage
-                            id={editMode ? "cookiesfortune.modal.title.edit" : "cookiesfortune.modal.title.create"}
-                        />
+                      {
+                        editMode ? (
+                          <FormattedMessage id="cookiesfortune.modal.title.edit" />
+                        ) : (
+                          <FormattedMessage id="cookiesfortune.modal.title.create" />
+                        )}
                     </h3>
                     <div className="mb4">
                         <Textarea

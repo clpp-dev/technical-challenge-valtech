@@ -9,7 +9,7 @@ export async function cookiesFortuneMiddleware(
   try {
     const response = await masterdata.searchDocuments({
       dataEntity: 'CF',
-      fields: ['id', 'cookieFortune', 'createdIn'],
+      fields: ['id', 'CookieFortune', 'createdIn'],
       pagination: {
         page: 1,
         pageSize: 100,
