@@ -71,7 +71,7 @@ const CustomShowCookiesFortune = () => {
         {selectedFortune && !isLoadingFortune && (
           <div className={`${styles.fade_in}`}>
             <h3>
-              {selectedFortune}
+              "{selectedFortune}"
             </h3>
           </div>
         )}
