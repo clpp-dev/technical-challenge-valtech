@@ -1,0 +1,6 @@
+{
+  "custom-cookies-fortune": {
+    "component": "cookiesfortune",
+    "composition": "children"
+  }
+}
