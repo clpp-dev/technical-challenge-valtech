@@ -17,9 +17,6 @@ const clients: ClientsConfig<Clients> = {
       retries: 2,
       timeout: TIMEOUT_MS,
     },
-    status: {
-      memoryCache,
-    },
   },
 }
 

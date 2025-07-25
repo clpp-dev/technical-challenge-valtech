@@ -1,6 +1,5 @@
 {
-  "custom-cookies-fortune": {
-    "component": "cookiesfortune",
-    "composition": "children"
+  "CustomShowCookiesFortune": {
+    "component": "CustomShowCookiesFortune"
   }
 }
