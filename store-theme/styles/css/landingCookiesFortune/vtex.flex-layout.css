@@ -1,0 +1,18 @@
+.flexRow--main_class_landingCookiesFortune {
+  min-height: 50dvh;
+  max-height: 1080px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.flexRow--main_class_landingCookiesFortune :global(.vtex-store-components-3-x-container) {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  max-width: none !important;
+}

@@ -1,0 +1,16 @@
+{
+  "store.custom#landingCookiesFortune": {
+    "children": [
+      "flex-layout.row#landingCookiesFortune"
+    ]
+  },
+
+  "flex-layout.row#landingCookiesFortune": {
+    "props": {
+      "blockClass": "main_class_landingCookiesFortune"
+    },
+    "children": [
+      "CustomShowCookiesFortune"
+    ]
+  }
+}

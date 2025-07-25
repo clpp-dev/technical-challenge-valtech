@@ -1,0 +1,7 @@
+mutation createDocumentCF($acronym: String!, $document: DocumentInput!) {
+  createDocument(acronym: $acronym, document: $document) @context(provider: "vtex.store-graphql@2.x") {
+    documentId
+    id
+    href
+  }
+}

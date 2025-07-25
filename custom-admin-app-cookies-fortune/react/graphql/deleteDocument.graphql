@@ -1,0 +1,6 @@
+mutation deleteDocumentCF($acronym: String!, $documentId: String!) {
+  deleteDocument(acronym: $acronym, documentId: $documentId) @context(provider: "vtex.store-graphql@2.x") {
+    documentId
+    id
+  }
+}
