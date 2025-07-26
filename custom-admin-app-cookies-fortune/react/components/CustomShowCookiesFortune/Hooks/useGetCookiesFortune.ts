@@ -1,17 +1,6 @@
 import { useState, useEffect } from 'react'
+import { CookieFortune, UseGetCookiesFortuneReturn } from '../types'
 
-interface CookieFortune {
-  CookieFortune: string
-  id: string
-  createdIn: string
-}
-
-interface UseGetCookiesFortuneReturn {
-  data: CookieFortune[] | null
-  loading: boolean
-  error: string | null
-  refetch: () => void
-}
 
 export const useGetCookiesFortune = (): UseGetCookiesFortuneReturn => {
   const [data, setData] = useState<CookieFortune[] | null>(null)

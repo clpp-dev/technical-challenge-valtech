@@ -1,5 +1,3 @@
-// Types and interfaces for AdminCookiesFortuneManagment component
-
 export interface CookieFortuneField {
   key: string;
   value: string;
