@@ -1,8 +1,7 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { FormattedMessage } from 'react-intl'
 import { Layout, PageBlock, PageHeader, Tabs, Tab } from 'vtex.styleguide'
 
-//componentes
 import AdminCookiesFortuneManagment from './components/AdminCookiesFortuneManagment'
 
 import './styles.global.css'

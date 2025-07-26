@@ -1,43 +1,48 @@
-import { useState } from 'react'
-import { Button, Spinner, Alert } from 'vtex.styleguide'
+import React, { useState } from 'react'
+import { Alert } from 'vtex.styleguide'
 import { useGetCookiesFortune } from './Hooks/useGetCookiesFortune'
 import styles from './CustomShowCookiesFortune.css'
+import { CookieFortune } from './types'
 
-const CustomShowCookiesFortune = () => {
-  const [selectedFortune, setSelectedFortune] = useState('')
-  const [luckyNumber, setLuckyNumber] = useState('')
-  const [isLoadingFortune, setIsLoadingFortune] = useState(false)
+const CustomShowCookiesFortune: React.FC = () => {
+  const [selectedFortune, setSelectedFortune] = useState<string>('')
+  const [luckyNumber, setLuckyNumber] = useState<string>('')
+  const [isLoadingFortune, setIsLoadingFortune] = useState<boolean>(false)
 
   const { data, loading, error } = useGetCookiesFortune()
 
-  const generateLuckyNumber = () => {
-    const part1 = Math.floor(Math.random() * 100).toString().padStart(2, '0')
-    const part2 = Math.floor(Math.random() * 100).toString().padStart(2, '0')
-    const part3 = Math.floor(Math.random() * 10000).toString().padStart(4, '0')
+  const generateLuckyNumber = (): string => {
+    const part1: string = Math.floor(Math.random() * 100).toString().padStart(2, '0')
+    const part2: string = Math.floor(Math.random() * 100).toString().padStart(2, '0')
+    const part3: string = Math.floor(Math.random() * 10000).toString().padStart(4, '0')
     return `${part1}-${part2}-${part3}`
   }
 
-  const getRandomFortune = () => {
+  const getRandomFortune = (): string => {
     if (!data || data.length === 0) {
       return "No hay frases disponibles"
     }
 
-    const fortunes = data?.map(item => item?.CookieFortune).filter(fortune => fortune && fortune?.trim() !== "")
+    const fortunes: string[] = data
+      ?.map((item: CookieFortune) => item?.CookieFortune)
+      .filter((fortune: string | undefined): fortune is string =>
+        fortune !== undefined && fortune.trim() !== ""
+      ) || []
 
     if (fortunes.length === 0) {
       return "No hay frases disponibles"
     }
 
-    const randomIndex = Math.floor(Math.random() * fortunes.length)
+    const randomIndex: number = Math.floor(Math.random() * fortunes.length)
     return fortunes[randomIndex]
   }
 
-  const handleGetFortune = async () => {
+  const handleGetFortune = async (): Promise<void> => {
     setIsLoadingFortune(true)
 
     setTimeout(() => {
-      const randomFortune = getRandomFortune()
-      const randomLuckyNumber = generateLuckyNumber()
+      const randomFortune: string = getRandomFortune()
+      const randomLuckyNumber: string = generateLuckyNumber()
 
       setSelectedFortune(randomFortune)
       setLuckyNumber(randomLuckyNumber)
@@ -98,6 +103,7 @@ const CustomShowCookiesFortune = () => {
           className={`${styles.custom_show_cookies_fortune_button}`}
           onClick={handleGetFortune}
           disabled={isLoadingFortune}
+          type="button"
         >
           {isLoadingFortune ? 'Obteniendo tu fortuna...' : 'Obtener Frase de la Fortuna'}
         </button>
