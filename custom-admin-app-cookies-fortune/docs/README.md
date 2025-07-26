@@ -4,7 +4,6 @@
 
 1. [Components and their documentation](#components-and-their-documentation)
 2. [Installation](#installation)
-3. [Configuration](#configuration)
 
 ## Components and their documentation
 
