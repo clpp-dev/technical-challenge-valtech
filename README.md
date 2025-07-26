@@ -52,7 +52,7 @@ technical-challenge-valtech/
 ### 1. Custom Admin App Cookies Fortune
 **Vendor**: `valtech`  
 **Name**: `custom-admin-app-cookies-fortune`  
-**Version**: `0.0.0`
+**Version**: `0.x`
 
 #### Key Components:
 - `AdminCookiesFortuneManagment` - Complete admin interface for managing fortunes
@@ -70,7 +70,7 @@ technical-challenge-valtech/
 ### 2. Store Theme Valtech
 **Vendor**: `valtech`  
 **Name**: `store-theme-valtech-cristian-perez`  
-**Version**: `0.0.0`
+**Version**: `0.x`
 
 #### Implementation:
 - Custom landing page at `/cookies-fortune`
