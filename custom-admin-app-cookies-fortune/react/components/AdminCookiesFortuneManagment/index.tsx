@@ -12,22 +12,35 @@ import {
     Button,
     Textarea
 } from 'vtex.styleguide'
-
 import GET_DOCUMENTS from '../../graphql/getCookiesFortune.graphql'
 import CREATE_DOCUMENT from '../../graphql/createDocument.graphql'
 import DELETE_DOCUMENT from '../../graphql/deleteDocument.graphql'
 import UPDATE_DOCUMENT from '../../graphql/updateDocument.graphql'
 
-const AdminCookiesFortuneManagment = () => {
-    const [modalOpen, setModalOpen] = useState(false)
-    const [editMode, setEditMode] = useState(false)
-    const [ntf, setNotification] = useState({
+import {
+    CookieFortuneData,
+    NewFortuneState,
+    NotificationState,
+    TableDataItem,
+    TableSchema,
+    GraphQLQueryVariables,
+    CreateDocumentVariables,
+    UpdateDocumentVariables,
+    DeleteDocumentVariables,
+    CookieFortuneDocument,
+    CookieFortuneField
+} from './types'
+
+const AdminCookiesFortuneManagment: React.FC = () => {
+    const [modalOpen, setModalOpen] = useState<boolean>(false)
+    const [editMode, setEditMode] = useState<boolean>(false)
+    const [ntf, setNotification] = useState<NotificationState>({
         active: false,
         type: "error",
         text: "error"
     })
 
-    const { data, loading, error, refetch } = useQuery(GET_DOCUMENTS, {
+    const { data, loading, error, refetch } = useQuery<CookieFortuneData, GraphQLQueryVariables>(GET_DOCUMENTS, {
         variables: {
             "acronym": "CF",
             "fields": [
@@ -39,12 +52,12 @@ const AdminCookiesFortuneManagment = () => {
         }
     })
 
-    const [newFortune, setNewFortune] = useState({
+    const [newFortune, setNewFortune] = useState<NewFortuneState>({
         CookieFortune: "",
         id: ""
     })
 
-    const [deleteDocument] = useMutation(DELETE_DOCUMENT, {
+    const [deleteDocument] = useMutation<any, DeleteDocumentVariables>(DELETE_DOCUMENT, {
         onCompleted: () => {
             setNotification({
                 active: true,
@@ -64,8 +77,8 @@ const AdminCookiesFortuneManagment = () => {
         },
     })
 
-    const [createDocument] = useMutation(CREATE_DOCUMENT, {
-        onCompleted: (data) => {
+    const [createDocument] = useMutation<any, CreateDocumentVariables>(CREATE_DOCUMENT, {
+        onCompleted: () => {
             setNotification({
                 active: true,
                 type: "success",
@@ -88,8 +101,8 @@ const AdminCookiesFortuneManagment = () => {
         },
     })
 
-    const [editDocument] = useMutation(UPDATE_DOCUMENT, {
-        onCompleted: (data) => {
+    const [editDocument] = useMutation<any, UpdateDocumentVariables>(UPDATE_DOCUMENT, {
+        onCompleted: () => {
             setNotification({
                 active: true,
                 type: "success",
@@ -165,9 +178,9 @@ const AdminCookiesFortuneManagment = () => {
         }
     }
 
-    const handleEdit = (item) => {
-        const fortune = item.fields.find(field => field.key === 'CookieFortune')?.value || ""
-        const id = item.fields.find(field => field.key === 'id')?.value || ""
+    const handleEdit = (item: CookieFortuneDocument): void => {
+        const fortune = item.fields.find((field: CookieFortuneField) => field.key === 'CookieFortune')?.value || ""
+        const id = item.fields.find((field: CookieFortuneField) => field.key === 'id')?.value || ""
 
         setNewFortune({
             CookieFortune: fortune,
@@ -177,8 +190,8 @@ const AdminCookiesFortuneManagment = () => {
         setModalOpen(true)
     }
 
-    const handleDelete = (item) => {
-        const id = item.documentId || item.fields.find(field => field.key === 'id')?.value
+    const handleDelete = (item: CookieFortuneDocument): void => {
+        const id = item.documentId || item.fields.find((field: CookieFortuneField) => field.key === 'id')?.value
 
         if (id) {
             deleteDocument({
@@ -201,15 +214,16 @@ const AdminCookiesFortuneManagment = () => {
             }, 3000)
             return () => clearTimeout(timer)
         }
+        return undefined
     }, [ntf.active])
 
     if (loading) return <Spinner />
     if (error) return <Alert type="error">Error cargando las frases de la fortuna</Alert>
 
-    const tableData = data?.documents?.map(item => {
+    const tableData: TableDataItem[] = data?.documents?.map((item: CookieFortuneDocument) => {
 
-        const fortune = item.fields.find(field => field.key === 'CookieFortune')?.value || ""
-        const id = item.fields.find(field => field.key === 'id')?.value || ""
+        const fortune = item.fields.find((field: CookieFortuneField) => field.key === 'CookieFortune')?.value || ""
+        const id = item.fields.find((field: CookieFortuneField) => field.key === 'id')?.value || ""
 
         return {
             id,
@@ -231,7 +245,7 @@ const AdminCookiesFortuneManagment = () => {
         }
     }) || []
 
-    const tableSchema = {
+    const tableSchema: TableSchema = {
         properties: {
             phrase: {
                 title: <FormattedMessage id="cookiesfortune.input.phrase" />,
@@ -293,14 +307,14 @@ const AdminCookiesFortuneManagment = () => {
                     </h3>
                     <div className="mb4">
                         <Textarea
-                            label={<FormattedMessage id="cookiesfortune.input.phrase" />}
-                            value={newFortune.CookieFortune}
-                            onChange={(e) => setNewFortune({
-                                ...newFortune,
-                                CookieFortune: e.target.value
-                            })}
-                            required
-                            rows={3}
+                          label={<FormattedMessage id="cookiesfortune.input.phrase" />}
+                          value={newFortune.CookieFortune}
+                          onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setNewFortune({
+                              ...newFortune,
+                              CookieFortune: e.target.value
+                          })}
+                          required
+                          rows={3}
                         />
                     </div>
                 </div>
