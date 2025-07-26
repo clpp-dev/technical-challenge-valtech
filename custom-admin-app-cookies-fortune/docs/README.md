@@ -8,8 +8,8 @@
 
 ## Components and their documentation
 
-- [AdminCookiesFortuneManagment](./valtech.custom-admin-app-cookies-fortune/AdminCookiesFortuneManagment) - .
-- [CustomShowCookiesFortune](./valtech.custom-admin-app-cookies-fortune/CustomShowCookiesFortune) - .
+- [AdminCookiesFortuneManagment](./valtech.custom-admin-app-cookies-fortune/AdminCookiesFortuneManagment)
+- [CustomShowCookiesFortune](./valtech.custom-admin-app-cookies-fortune/CustomShowCookiesFortune)
 
 ## Installation
 
@@ -20,3 +20,9 @@
   }
 }
 ```
+
+## Component develop by Cristian Leandro Perez Pelaez
+- **Date**: 23 July 2025
+- **Developer**: Cristian Leandro Perez Pelaez
+- **Company**: Valtech Technical Challenge
+- **Platform**: VTEX IO

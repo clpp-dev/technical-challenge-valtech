@@ -114,3 +114,9 @@ The component includes comprehensive error handling for:
 - Concurrent modification conflicts
 
 All errors are displayed to users through notification alerts with appropriate messaging.
+
+## Component develop by Cristian Leandro Perez Pelaez
+- **Date**: 23 July 2025
+- **Developer**: Cristian Leandro Perez Pelaez
+- **Company**: Valtech Technical Challenge
+- **Platform**: VTEX IO

@@ -4,6 +4,11 @@
 
 This repository contains a complete VTEX IO application developed as a technical challenge for **Valtech**. The project demonstrates full-stack development capabilities including custom admin interfaces, customer-facing components, backend services, and theme integration.
 
+## Oficial Documentation in Vtex App Developers
+- [Main documentation componenets](https://developers.vtex.com/docs/apps/valtech.custom-admin-app-cookies-fortune)
+- [Documentation AdminCookiesFortuneManagment](https://developers.vtex.com/docs/apps/valtech.custom-admin-app-cookies-fortune/AdminCookiesFortuneManagment)
+- [Documentation CustomShowCookiesFortune](https://developers.vtex.com/docs/apps/valtech.custom-admin-app-cookies-fortune/CustomShowCookiesFortune)
+
 ## Project Overview
 
 The application is a **Fortune Cookie Management System** that allows administrators to manage inspirational messages and provides customers with an interactive fortune cookie experience. The system consists of two main applications working together:

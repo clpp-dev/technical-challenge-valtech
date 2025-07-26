@@ -181,3 +181,9 @@ The component gracefully handles various error scenarios:
 ```
 
 This component is perfect for adding an engaging, interactive element to your store that provides customers with daily inspiration and entertainment.
+
+## Component develop by Cristian Leandro Perez Pelaez
+- **Date**: 23 July 2025
+- **Developer**: Cristian Leandro Perez Pelaez
+- **Company**: Valtech Technical Challenge
+- **Platform**: VTEX IO
